@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Ship\Ship.cs" />
     <Compile Include="Assets\Scripts\Ship\MovementControls.cs" />
+    <Compile Include="Assets\Scripts\Ship\MaterialColorController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

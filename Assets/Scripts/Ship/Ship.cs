@@ -12,9 +12,12 @@ namespace NewLunarLander
 
     public class Ship : MonoBehaviour
     {
+        [SerializeField] MaterialColorController FloorMCC = null;
+
         [SerializeField] float maxSpeedTolerance = 5.0f;
         [SerializeField] float accelerationSpeed = 10.0f;
         [SerializeField] float rotationSpeed = 90.0f;
+
 
         Rigidbody rb;
         MovementControls mc;
@@ -26,6 +29,10 @@ namespace NewLunarLander
         {
             rb = GetComponent<Rigidbody>();
             mc = GetComponent<MovementControls>();
+        }
+        void Start()
+        {
+            FloorMCC.SetAutomaticColors(new Color(0.25f, 0.25f, 0.25f), Color.white, 0.25f);
         }
 
 
