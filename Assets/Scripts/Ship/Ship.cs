@@ -12,6 +12,8 @@ namespace NewLunarLander
     public class Ship : MonoBehaviour
     {
         [SerializeField] float maxSpeedTolerance = 5.0f;
+        [SerializeField] float speed = 10.0f;
+        [SerializeField] float rotationSpeed = 90.0f;
 
         Rigidbody rb;
         MovementControls mc;
@@ -24,17 +26,25 @@ namespace NewLunarLander
             mc = GetComponent<MovementControls>();
         }
 
-        void Start()
-        {
-
-        }
-
         // Update is called once per frame
         void Update()
         {
-            if (Input.GetKeyDown(mc.GetKey(CONTROLS.UP)))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 rb.isKinematic = false;
+            }
+            if (Input.GetKey(mc.GetKey(CONTROLS.UP)))
+            {
+                Accelerate();
+            }
+            if (Input.GetKey(mc.GetKey(CONTROLS.LEFT)))
+            {
+                RotateLeft();
+            }
+
+            if (Input.GetKey(mc.GetKey(CONTROLS.RIGHT)))
+            {
+                RotateRight();
             }
 
             actualSpeed = rb.velocity.y;
@@ -53,6 +63,25 @@ namespace NewLunarLander
                     Debug.Log("Zafó nomás. Velocidad: " + -actualSpeed);
                 }
             }
+        }
+
+
+        void Accelerate()
+        {
+            rb.AddForce(transform.up * speed);
+        }
+        void RotateLeft()
+        {
+            Vector3 v3Speed = new Vector3(0.0f, 0.0f, rotationSpeed) * Time.deltaTime;
+
+            rb.MoveRotation(rb.rotation * Quaternion.Euler(v3Speed));
+            //rb.AddTorque(rotationSpeed);
+        }
+        void RotateRight()
+        {
+            Vector3 v3Speed = new Vector3(0.0f, 0.0f, -rotationSpeed) * Time.deltaTime;
+
+            rb.MoveRotation(rb.rotation * Quaternion.Euler(v3Speed));
         }
     }
 }
