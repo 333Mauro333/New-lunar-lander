@@ -18,6 +18,11 @@ namespace NewLunarLander
         [SerializeField] float accelerationSpeed = 10.0f;
         [SerializeField] float rotationSpeed = 90.0f;
 
+        [SerializeField] string victoryFloorTag = "";
+
+        [SerializeField] Transform cameraPosition;
+        [SerializeField] Vector3 diff;
+
 
         Rigidbody rb;
         MovementControls mc;
@@ -41,11 +46,13 @@ namespace NewLunarLander
             PlayerInput();
 
             SaveActualSpeed();
+
+            cameraPosition.position = transform.position - diff;
         }
 
         void OnCollisionEnter(Collision collision)
         {
-            if (collision.gameObject.CompareTag("Floor"))
+            if (collision.gameObject.CompareTag(victoryFloorTag))
             {
                 if (IsTooFast())
                 {
@@ -56,6 +63,10 @@ namespace NewLunarLander
                     Debug.Log("Zafó nomás. Velocidad: " + -actualSpeed);
                 }
             }
+        }
+        void OnCollisionExit(Collision collision)
+        {
+            rb.angularVelocity = Vector3.zero;
         }
 
 

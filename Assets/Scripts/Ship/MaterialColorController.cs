@@ -26,7 +26,7 @@ namespace NewLunarLander
         bool gGoUp;
         bool bGoUp;
 
-        [SerializeField] float lerpTime;
+        float lerpTime;
 
 
         void Awake()
