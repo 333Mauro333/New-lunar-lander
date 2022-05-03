@@ -17,6 +17,7 @@ namespace NewLunarLander
         [SerializeField] float maxSpeedTolerance = 5.0f;
         [SerializeField] float accelerationSpeed = 10.0f;
         [SerializeField] float rotationSpeed = 90.0f;
+        [SerializeField] float rotationLimit = 45.0f;
 
         [SerializeField] string victoryFloorTag = "";
 
@@ -39,8 +40,6 @@ namespace NewLunarLander
         {
             FloorMCC.SetAutomaticColors(new Color(0.25f, 0.25f, 0.25f), Color.white, 0.25f);
         }
-
-
         void Update()
         {
             PlayerInput();
@@ -64,7 +63,7 @@ namespace NewLunarLander
                 }
             }
         }
-        void OnCollisionExit(Collision collision)
+        void OnCollisionStay(Collision collision)
         {
             rb.angularVelocity = Vector3.zero;
         }
@@ -103,8 +102,10 @@ namespace NewLunarLander
         }
         void Rotate(DIRECTION direction)
         {
+            // Inicializo la variable local que va a sumar la rotación en el frame actual.
             Vector3 v3Speed = Vector3.zero;
 
+            // Deine si la rotación va hacia la izquierda o hacia la derecha.
             switch (direction)
             {
                 case DIRECTION.LEFT:
@@ -116,12 +117,50 @@ namespace NewLunarLander
                     break;
             }
 
+            // Suma la rotación.
+            //if (CanTurn(direction))
+            //{
+            //    rb.MoveRotation(rb.rotation * Quaternion.Euler(v3Speed));
+            //}
+            //else
+            //{
+            //    v3Speed = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, rotationLimit);
+            //    rb.rotation = Quaternion.Euler(v3Speed);
+            //}
+
+            // Suma la rotación.
             rb.MoveRotation(rb.rotation * Quaternion.Euler(v3Speed));
+
+            if (rb.rotation.z > rotationLimit / 90.0f)
+            {
+                Debug.Log("IZQUIERDA (" + rb.rotation.z + ")");
+            }
+            else if (rb.rotation.z < rotationLimit / -90.0f)
+            {
+                Debug.Log("DERECHA (" + rb.rotation.z + ")");
+            }
+            else
+            {
+                Debug.Log("NADA");
+            }
         }
 
         bool IsTooFast()
         {
             return actualSpeed < -maxSpeedTolerance;
+        }
+        bool CanTurn(DIRECTION direction)
+        {
+            switch (direction)
+            {
+                case DIRECTION.LEFT:
+                    return rb.rotation.z + rotationSpeed * Time.deltaTime < rotationLimit / 90.0f;
+
+                case DIRECTION.RIGHT:
+                    return rb.rotation.z - rotationSpeed * Time.deltaTime > rotationLimit / -90.0f;
+            }
+
+            return true;
         }
     }
 }
