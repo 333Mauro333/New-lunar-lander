@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.0036596032, g: 0.0036679155, b: 0.0036600782, a: 1}
+  m_IndirectSpecularColor: {r: 0.003795913, g: 0.0038061463, b: 0.0038004518, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2165,7 +2165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FloorMCC: {fileID: 393483720}
   maxSpeedTolerance: 2
-  accelerationSpeed: 5
+  accelerationSpeed: 20
   rotationSpeed: 90
   rotationLimit: 20
   victoryFloorTag: VictoryFloor

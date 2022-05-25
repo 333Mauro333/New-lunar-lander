@@ -11,7 +11,6 @@ namespace NewLunarLander
         public int score;
         public bool won;
 
-        public enum SCENE { MENU, GAMEPLAY };
 
 
         void Awake()
@@ -28,6 +27,10 @@ namespace NewLunarLander
         public void LoadMenu()
         {
             SceneManager.LoadScene("Menu");
+        }
+        public void QuitGame()
+        {
+            Application.Quit();
         }
 
         void Initialize()
