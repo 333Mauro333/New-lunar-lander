@@ -21,8 +21,9 @@ namespace NewLunarLander
 
         [SerializeField] string victoryFloorTag = "";
 
+        [SerializeField] float diffY = 20.0f;
+
         [SerializeField] Transform cameraPosition;
-        [SerializeField] Vector3 diff;
 
 
         Rigidbody rb;
@@ -46,7 +47,7 @@ namespace NewLunarLander
 
             SaveActualSpeed();
 
-            cameraPosition.position = transform.position - diff;
+            FollowPlayer();
         }
 
         void OnCollisionEnter(Collision collision)
@@ -77,11 +78,6 @@ namespace NewLunarLander
 
         void PlayerInput()
         {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                rb.isKinematic = false;
-            }
-
             if (Input.GetKey(mc.GetKey(CONTROLS.UP)))
             {
                 Accelerate();
@@ -118,17 +114,6 @@ namespace NewLunarLander
             }
 
             // Suma la rotación.
-            //if (CanTurn(direction))
-            //{
-            //    rb.MoveRotation(rb.rotation * Quaternion.Euler(v3Speed));
-            //}
-            //else
-            //{
-            //    v3Speed = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, rotationLimit);
-            //    rb.rotation = Quaternion.Euler(v3Speed);
-            //}
-
-            // Suma la rotación.
             rb.MoveRotation(rb.rotation * Quaternion.Euler(v3Speed));
 
             if (rb.rotation.z > rotationLimit / 90.0f)
@@ -144,23 +129,21 @@ namespace NewLunarLander
                 Debug.Log("NADA");
             }
         }
+        void FollowPlayer()
+        {
+            if (cameraPosition.position.y > transform.position.y + diffY)
+            {
+                cameraPosition.position = new Vector3(cameraPosition.position.x, transform.position.y + diffY, cameraPosition.position.z);
+            }
+            else if (cameraPosition.position.y < transform.position.y - diffY)
+            {
+                cameraPosition.position = new Vector3(cameraPosition.position.x, transform.position.y - diffY, cameraPosition.position.z);
+            }
+        }
 
         bool IsTooFast()
         {
             return actualSpeed < -maxSpeedTolerance;
-        }
-        bool CanTurn(DIRECTION direction)
-        {
-            switch (direction)
-            {
-                case DIRECTION.LEFT:
-                    return rb.rotation.z + rotationSpeed * Time.deltaTime < rotationLimit / 90.0f;
-
-                case DIRECTION.RIGHT:
-                    return rb.rotation.z - rotationSpeed * Time.deltaTime > rotationLimit / -90.0f;
-            }
-
-            return true;
         }
     }
 }
