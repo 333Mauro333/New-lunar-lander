@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - VictoryFloor
+  - GameManager
   layers:
   - Default
   - TransparentFX

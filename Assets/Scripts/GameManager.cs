@@ -9,7 +9,6 @@ namespace NewLunarLander
         public static GameManager instance;
 
         public int score;
-        public bool won;
 
 
 
@@ -23,6 +22,10 @@ namespace NewLunarLander
         public void LoadGameplay()
         {
             SceneManager.LoadScene("Gameplay");
+        }
+        public void LoadResultsScreen()
+        {
+            SceneManager.LoadScene("Results");
         }
         public void LoadMenu()
         {

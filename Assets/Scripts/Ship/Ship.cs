@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -20,11 +18,11 @@ namespace NewLunarLander
         [SerializeField] float rotationLimit = 45.0f;
 
         [SerializeField] string victoryFloorTag = "";
+        [SerializeField] string floorTag = "";
 
         [SerializeField] float diffY = 20.0f;
 
         [SerializeField] Transform cameraPosition;
-
 
         Rigidbody rb;
         MovementControls mc;
@@ -56,12 +54,17 @@ namespace NewLunarLander
             {
                 if (IsTooFast())
                 {
-                    Debug.Log("Se pasó. Velocidad: " + -actualSpeed);
+                    GameManager.instance.LoadResultsScreen();
                 }
                 else
                 {
-                    Debug.Log("Zafó nomás. Velocidad: " + -actualSpeed);
+                    GameManager.instance.score += 100;
+                    GameManager.instance.LoadGameplay();
                 }
+            }
+            if (collision.gameObject.CompareTag(floorTag))
+            {
+                GameManager.instance.LoadResultsScreen();
             }
         }
         void OnCollisionStay(Collision collision)

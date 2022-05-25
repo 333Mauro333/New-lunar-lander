@@ -60,6 +60,9 @@
     <Compile Include="Assets\Scripts\MaterialColorController.cs" />
     <Compile Include="Assets\Scripts\MovementControls.cs" />
     <Compile Include="Assets\Scripts\Ship\Ship.cs" />
+    <Compile Include="Assets\Scripts\TextController.cs" />
+    <Compile Include="Assets\Scripts\GameplayController.cs" />
+    <Compile Include="Assets\Scripts\ForLoadGameplay.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
